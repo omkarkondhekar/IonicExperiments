@@ -1,26 +1,37 @@
+<!-- Script to control visibility of Compounding grid -->
+<script type="text/javascript">
+	function showhide(id) {
+		var e = document.getElementById(id);
+		e.style.display = (e.style.display == 'block') ? 'none' : 'block';
+	}
+</script>
+<!-- Script to control visibility of Compounding grid -->
+
+<!-- Script to control visibility of Compounding grid -->
 <ion-view view-title="Deposit Calculator"> <ion-content
 	class="padding">
 <div class="list">
 	<label class="item item-input item-floating-label"> <span
 		class="input-label">Deposit Amount</span> <input type="text"
-		placeholder="Deposit Amount">
+		placeholder="Deposit Amount" ng-model="txtDeposit">
 	</label> <label class="item item-input item-floating-label"> <span
 		class="input-label">Annual Rate of Interest</span> <input type="text"
-		placeholder="Annual Rate of Interest">
+		placeholder="Annual Rate of Interest" ng-model="txtROI">
 	</label> <label class="item item-input item-floating-label"> <span
 		class="input-label">Deposit Period</span> <input type="text"
-		placeholder="Deposit Period">
+		placeholder="Deposit Period" ng-model="txtPeriod">
 	</label> <label class="item item-input item-select">
-		<div class="input-label">Deposit Period is in</div> <select>
-			<option selected>Days</option>
+		<div class="input-label">Deposit Period is in</div> <select ng-model="periodTimeUnit">
+			<option>Days</option>
 			<option>Months</option>
-			<option>Years</option>
+			<option selected>Years</option>
 	</select>
 	</label>
 	<div>
 		<ul class="list">
 			<li class="item item-toggle">Compunding<label
-				class="toggle toggle-balanced"> <input type="checkbox">
+				class="toggle toggle-balanced"> <input type="checkbox"
+					checked=true>
 					<div class="track">
 						<div class="handle"></div>
 					</div>
@@ -28,7 +39,9 @@
 			</li>
 		</ul>
 	</div>
-	<div>
+
+
+	<div id="compoundingDiv" style="display: block;">
 		<label class="item item-input item-select">
 			<div class="input-label">Compounding is</div> <select>
 				<option selected>Quarterly</option>
@@ -40,12 +53,12 @@
 
 	<!-- Place for Final Amount -->
 	<div>
-		<ion-nav-view name="finalAmt"></ion-nav-view>
+		{{finalAmt}}
 	</div>
 	<!-- Place for Final Amount -->
 
-	<div>
-		<button class="button button-block button-positive">Calculate
+	<div ng-conroller="FDCnrl">
+		<button class="button button-block button-positive" on-tap="FDCnrl()">Calculate
 		</button>
 		<button class="button button-block button-positive">Reset</button>
 	</div>
