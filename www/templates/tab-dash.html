@@ -1,28 +1,52 @@
-<ion-view view-title="Dashboard">
-  <ion-content class="padding">
-    <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
-        </div>
-      </div>
-    </div>
-  </ion-content>
-</ion-view>
+<ion-view view-title="Deposit Calculator"> <ion-content
+	class="padding">
+<div class="list">
+	<label class="item item-input item-floating-label"> <span
+		class="input-label">Deposit Amount</span> <input type="text"
+		placeholder="Deposit Amount">
+	</label> <label class="item item-input item-floating-label"> <span
+		class="input-label">Annual Rate of Interest</span> <input type="text"
+		placeholder="Annual Rate of Interest">
+	</label> <label class="item item-input item-floating-label"> <span
+		class="input-label">Deposit Period</span> <input type="text"
+		placeholder="Deposit Period">
+	</label> <label class="item item-input item-select">
+		<div class="input-label">Deposit Period is in</div> <select>
+			<option selected>Days</option>
+			<option>Months</option>
+			<option>Years</option>
+	</select>
+	</label>
+	<div>
+		<ul class="list">
+			<li class="item item-toggle">Compunding<label
+				class="toggle toggle-balanced"> <input type="checkbox">
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+			</label>
+			</li>
+		</ul>
+	</div>
+	<div>
+	<label class="item item-input item-select">
+		<div class="input-label">Compounding is</div> <select>
+			<option selected>Quarterly</option>
+			<option>Half-Yearly</option>
+			<option>Yearly</option>
+	</select>
+	</label>
+	</div>
+
+	<!-- Place for Final Amount -->
+	<div>
+		<ion-nav-view name="finalAmt"></ion-nav-view>
+	</div>
+	<!-- Place for Final Amount -->
+	
+	<div>
+		<button class="button button-block button-positive">Calculate
+		</button>
+		<button class="button button-block button-positive">Reset</button>
+	</div>
+</ion-content> </ion-view>
