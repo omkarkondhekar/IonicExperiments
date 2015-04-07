@@ -5,11 +5,14 @@ angular.module('starter.controllers', [])
 	$scope.finalAmt = 0;
 
 	$scope.periodTimeUnits = [ {
-		label : 'Days'
+		label : 'Days',
+		text : 'days'
 	}, {
-		label : 'Months'
+		label : 'Months',
+		text : 'months'
 	}, {
-		label : 'Years'
+		label : 'Years',
+		text : 'years'
 	} ];
 
 	$scope.compoundingTimeUnits = [ {
@@ -51,7 +54,21 @@ angular.module('starter.controllers', [])
 });
 
 function calculateSimpleInterest($scope) {
-	$scope.finalInterest = (($scope.txtDeposit * $scope.txtROI * $scope.txtPeriod) / 100);
+	console.log("TimeUnit List is " + $scope.periodTimeUnitList.label);
+	if ($scope.periodTimeUnitList.label = "Years") {
+		$scope.finalInterest = (($scope.txtDeposit * $scope.txtROI * $scope.txtPeriod) / 100);
+	}
+
+	if ($scope.periodTimeUnitList.label = "Days") {
+		$scope.finalInterest = (($scope.txtDeposit * $scope.txtROI / 365
+				* $scope.txtPeriod / 365) / 100);
+	}
+
+	if ($scope.periodTimeUnitList.label = "Months") {
+		$scope.finalInterest = (($scope.txtDeposit * $scope.txtROI / 12
+				* $scope.txtPeriod / 12) / 100);
+	}
+
 	$scope.finalAmt = $scope.txtDeposit + $scope.finalInterest;
 	if ($scope.finalAmt > 0) {
 		$scope.isInterest = true;

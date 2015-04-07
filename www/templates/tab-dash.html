@@ -18,7 +18,7 @@
 	</label>
 	<div>
 		<ul class="list">
-			<li class="item item-toggle">Compunding<label
+			<li class="item item-toggle">Compounding<label
 				class="toggle toggle-balanced"> <input type="checkbox"
 					checked=true ng-model="isCompounding">
 					<div class="track">
@@ -42,7 +42,7 @@
 	<!-- Place for Final Amount -->
 	<div ng-show="isInterest">
 		The investment of {{txtDeposit}} will grow to {{finalAmt}} in
-		{{txtPeriod}} with interest rate of {{txtROI}}. <br /> Net Interest
+		{{txtPeriod}} {{periodTimeUnitList.text}} with interest rate of {{txtROI}}. <br /> Net Interest
 		gained is {{finalInterest}}.
 	</div>
 	<!-- Place for Final Amount -->
