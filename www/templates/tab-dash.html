@@ -1,27 +1,17 @@
-<!-- Script to control visibility of Compounding grid -->
-<script type="text/javascript">
-	function showhide(id) {
-		var e = document.getElementById(id);
-		e.style.display = (e.style.display == 'block') ? 'none' : 'block';
-	}
-</script>
-<!-- Script to control visibility of Compounding grid -->
-
-<!-- Script to control visibility of Compounding grid -->
 <ion-view view-title="Deposit Calculator"> <ion-content
 	class="padding">
-<div class="list">
+<div class="list" ng-controller="FDCnrl">
 	<label class="item item-input item-floating-label"> <span
-		class="input-label">Deposit Amount</span> <input type="text"
+		class="input-label">Deposit Amount</span> <input type="number"
 		placeholder="Deposit Amount" ng-model="txtDeposit">
 	</label> <label class="item item-input item-floating-label"> <span
-		class="input-label">Annual Rate of Interest</span> <input type="text"
-		placeholder="Annual Rate of Interest" ng-model="txtROI">
+		class="input-label">Annual Rate of Interest</span> <input
+		type="number" placeholder="Annual Rate of Interest" ng-model="txtROI">
 	</label> <label class="item item-input item-floating-label"> <span
-		class="input-label">Deposit Period</span> <input type="text"
+		class="input-label">Deposit Period</span> <input type="number"
 		placeholder="Deposit Period" ng-model="txtPeriod">
 	</label> <label class="item item-input item-select">
-		<div class="input-label">Deposit Period is in</div> <select ng-model="periodTimeUnit">
+		<div class="input-label">Deposit Period is in</div> <select>
 			<option>Days</option>
 			<option>Months</option>
 			<option selected>Years</option>
@@ -31,7 +21,7 @@
 		<ul class="list">
 			<li class="item item-toggle">Compunding<label
 				class="toggle toggle-balanced"> <input type="checkbox"
-					checked=true>
+					checked=true ng-model="isCompounding">
 					<div class="track">
 						<div class="handle"></div>
 					</div>
@@ -41,9 +31,10 @@
 	</div>
 
 
-	<div id="compoundingDiv" style="display: block;">
+	<div id="compoundingDiv" ng-show="isCompounding">
 		<label class="item item-input item-select">
 			<div class="input-label">Compounding is</div> <select>
+				<option>Monthly</option>
 				<option selected>Quarterly</option>
 				<option>Half-Yearly</option>
 				<option>Yearly</option>
@@ -52,14 +43,17 @@
 	</div>
 
 	<!-- Place for Final Amount -->
-	<div>
-		{{finalAmt}}
+	<div ng-show="isInterest">
+		The investment of {{txtDeposit}} will grow to {{finalAmt}} in
+		{{txtPeriod}} with interest rate of {{txtROI}}. <br /> Net Interest
+		gained is {{finalInterest}}.
 	</div>
 	<!-- Place for Final Amount -->
 
 	<div ng-conroller="FDCnrl">
-		<button class="button button-block button-positive" on-tap="FDCnrl()">Calculate
-		</button>
-		<button class="button button-block button-positive">Reset</button>
+		<button class="button button-block button-positive" on-tap="FDAmt()"
+			on-click="FDAmt()">Calculate</button>
+		<button class="button button-block button-positive"
+			on-tap="resetForm()">Reset</button>
 	</div>
 </ion-content> </ion-view>
