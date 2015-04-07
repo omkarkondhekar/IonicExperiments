@@ -3,6 +3,25 @@ angular.module('starter.controllers', [])
 .controller('FDCnrl', function($scope) {
 	$scope.isInterest = false;
 	$scope.finalAmt = 0;
+
+	$scope.periodTimeUnits = [ {
+		label : 'Days'
+	}, {
+		label : 'Months'
+	}, {
+		label : 'Years'
+	} ];
+
+	$scope.compoundingTimeUnits = [ {
+		label : 'Monthly'
+	}, {
+		label : 'Quarterly'
+	}, {
+		label : 'Half-Yearly'
+	}, {
+		label : 'Yearly'
+	} ];
+
 	$scope.FDAmt = function() {
 		calculateSimpleInterest($scope);
 	}
