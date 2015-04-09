@@ -14,7 +14,8 @@
 		<div class="input-label">Deposit Period is in</div> <select
 		ng-init="periodTimeUnitList=periodTimeUnits[2]"
 		ng-model="periodTimeUnitList"
-		ng-options="periodTimeUnit.label for periodTimeUnit in periodTimeUnits"></select>
+		ng-options="periodTimeUnit.label for periodTimeUnit in periodTimeUnits"
+		ng-change="hideInterest()"></select>
 	</label>
 	<div>
 		<ul class="list">
@@ -41,9 +42,11 @@
 
 	<!-- Place for Final Amount -->
 	<div ng-show="isInterest">
-		The investment of {{txtDeposit}} will grow to {{finalAmt}} in
-		{{txtPeriod}} {{periodTimeUnitList.text}} with interest rate of {{txtROI}}. <br /> Net Interest
-		gained is {{finalInterest}}.
+		<center>
+			The investment of {{txtDeposit}} will grow to {{finalAmt}} in
+			{{txtPeriod}} {{periodTimeUnitList.text}} with interest rate of
+			{{txtROI}}%. <br /> Net Interest gained is {{finalInterest}}.
+		</center>
 	</div>
 	<!-- Place for Final Amount -->
 

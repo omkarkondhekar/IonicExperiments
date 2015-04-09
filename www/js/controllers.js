@@ -3,7 +3,7 @@ angular.module('starter.controllers', [])
 .controller('FDCnrl', function($scope) {
 	$scope.isInterest = false;
 	$scope.finalAmt = 0;
-
+	$scope.compoundingInterestData = [];
 	$scope.periodTimeUnits = [ {
 		label : 'Days',
 		text : 'days'
@@ -30,6 +30,10 @@ angular.module('starter.controllers', [])
 	}
 	$scope.resetForm = function() {
 		resetForm($scope);
+
+	}
+	$scope.hideInterest = function() {
+		setIsInterest($scope, false);
 	}
 })
 
@@ -53,32 +57,71 @@ angular.module('starter.controllers', [])
 	};
 });
 
-function calculateSimpleInterest($scope) {
-	console.log("TimeUnit List is " + $scope.periodTimeUnitList.label);
-	if ($scope.periodTimeUnitList.label = "Years") {
-		$scope.finalInterest = (($scope.txtDeposit * $scope.txtROI * $scope.txtPeriod) / 100);
+function calculateSimpleInterestScope($scope);
+{
+	var scopeInterest
+	scopeInterest = calculateSimpleInterest($scope.txtDeposit, $scope.txtROI,
+			$scope.txtPeriod, $scope.periodTimeUnitList.label);
+	$scope.finalAmt = calculateFinalAmount($scope.txtDeposit, scopeInterest)
+			.toFixed(2);
+	$scope.finalInterest = scopeInterest.toFixed(2);
+}
+
+function calculateSimpleInterest(principle, rate, depositPeriod,
+		depositTimeUnit) {
+	var interest;
+	if (depositTimeUnit == "Years") {
+		interest = ((principle * rate * depositPeriod) / 100);
 	}
 
-	if ($scope.periodTimeUnitList.label = "Days") {
-		$scope.finalInterest = (($scope.txtDeposit * $scope.txtROI / 365
-				* $scope.txtPeriod / 365) / 100);
+	if (depositTimeUnit == "Days") {
+		interest = ((principle * rate / 365 * depositPeriod) / 100);
 	}
 
-	if ($scope.periodTimeUnitList.label = "Months") {
-		$scope.finalInterest = (($scope.txtDeposit * $scope.txtROI / 12
-				* $scope.txtPeriod / 12) / 100);
+	if (depositTimeUnit == "Months") {
+		interest = ((principle * rate / 12 * depositPeriod) / 100);
 	}
+	return interest;
+}
 
-	$scope.finalAmt = $scope.txtDeposit + $scope.finalInterest;
-	if ($scope.finalAmt > 0) {
-		$scope.isInterest = true;
+function calculateFinalAmount(principle, interest) {
+	return principle + interest;
+}
+
+function calculateCompoundInterest(principle, rate, depositPeriod,
+		depositTimeUnit, compoundingUnit) {
+	var loopFactor;
+	var remainderFactor;
+	var tempAmount = 0;
+	var i;
+	var compoundInterestData=[];
+
+	if (compoundingUnit == "Monthly") {
+		if (depositTimeUnit == "Days" && depositPeriod >= 60) {
+			loopFactor = depositPeriod / 30;
+			remainderFactor = depositPeriod % 30;
+			for (i = 1; i <= loopFactor; i++) {
+				var partialInterest = calculateSimpleInterest(principle, rate,
+						depositPeriod, depositTimeUnit);
+				var partialAmount = tempAmount + partialInterest;
+				compoundInterestData.push("iteration");
+				tempAmount = partialAmount;
+			}
+		}
 	}
+}
+
+function setIsInterest($scope, value) {
+	$scope.isInterest = value;
+}
+function setIsCompounding($scope, value) {
+	$scope.isCompounding = value;
 }
 
 function resetForm($scope) {
 	$scope.txtDeposit = "";
 	$scope.txtROI = "";
 	$scope.txtPeriod = "";
-	$scope.isInterest = false;
-	$scope.isCompounding = false;
+	setIsInterest($scope, false);
+	setIsCompounding($scope, false);
 }
