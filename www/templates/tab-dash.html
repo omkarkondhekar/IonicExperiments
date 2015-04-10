@@ -1,16 +1,22 @@
 <ion-view view-title="Deposit Calculator"> <ion-content
 	class="padding">
 <div class="list" ng-controller="FDCnrl">
-	<label class="item item-input item-floating-label"> <span
-		class="input-label">Deposit Amount</span> <input type="number"
-		placeholder="Deposit Amount" ng-model="txtDeposit">
-	</label> <label class="item item-input item-floating-label"> <span
-		class="input-label">Annual Rate of Interest</span> <input
-		type="number" placeholder="Annual Rate of Interest" ng-model="txtROI">
-	</label> <label class="item item-input item-floating-label"> <span
-		class="input-label">Deposit Period</span> <input type="number"
-		placeholder="Deposit Period" ng-model="txtPeriod">
-	</label> <label class="item item-input item-select">
+	<form name="userInput">
+		<label class="item item-input item-floating-label"> <span
+			class="input-label">Deposit Amount</span> <input type="number"
+			name="txtDeposit" placeholder="Deposit Amount" ng-model="txtDeposit"
+			ng-required="true"> <span class="error-message"
+			ng-show="userInput.txtDeposit.$dirty && userInput.txtDeposit.$error.required">This
+				is required field</span>
+		</label> <label class="item item-input item-floating-label"> <span
+			class="input-label">Annual Rate of Interest</span> <input
+			type="number" placeholder="Annual Rate of Interest" ng-model="txtROI">
+		</label> <label class="item item-input item-floating-label"> <span
+			class="input-label">Deposit Period</span> <input type="number"
+			placeholder="Deposit Period" ng-model="txtPeriod">
+		</label>
+	</form>
+	<label class="item item-input item-select">
 		<div class="input-label">Deposit Period is in</div> <select
 		ng-init="periodTimeUnitList=periodTimeUnits[2]"
 		ng-model="periodTimeUnitList"
@@ -21,7 +27,8 @@
 		<ul class="list">
 			<li class="item item-toggle">Compounding<label
 				class="toggle toggle-balanced"> <input type="checkbox"
-					checked=true ng-model="isCompounding">
+					checked=false ng-model="isCompounding" ng-init="initCompounding()"
+					ng-change="hideInterest()">
 					<div class="track">
 						<div class="handle"></div>
 					</div>
@@ -36,17 +43,24 @@
 			<div class="input-label">Compounding is</div> <select
 			ng-init="compoundingTimeUnitList=compoundingTimeUnits[1]"
 			ng-model="compoundingTimeUnitList"
-			ng-options="compoundingTimeUnit.label for compoundingTimeUnit in compoundingTimeUnits"></select>
+			ng-options="compoundingTimeUnit.label for compoundingTimeUnit in compoundingTimeUnits"
+			ng-change="hideInterest()"></select>
 		</label>
 	</div>
 
 	<!-- Place for Final Amount -->
 	<div ng-show="isInterest">
-		<center>
-			The investment of {{txtDeposit}} will grow to {{finalAmt}} in
-			{{txtPeriod}} {{periodTimeUnitList.text}} with interest rate of
-			{{txtROI}}%. <br /> Net Interest gained is {{finalInterest}}.
-		</center>
+		<br />
+		<h3>
+			<center>
+				Investment of {{txtDeposit}} will grow to {{finalAmt}} in
+				{{txtPeriod}} {{periodTimeUnitList.text}} with interest rate of
+				{{txtROI}}% <span ng-show="isCompounding">with
+					{{compoundingTimeUnitList.label | lowercase}} compounding.</span><br />
+				Net interest gained is {{finalInterest}}.
+			</center>
+		</h3>
+		<br />
 	</div>
 	<!-- Place for Final Amount -->
 
